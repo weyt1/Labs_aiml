@@ -3,13 +3,9 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 
 
-df = pd.read_csv("test.csv")
+df = pd.read_csv("train.csv")
+df.info()
 
-print (df.head())
-print (df.dtypes)
-print (df.columns)
-
-print(df)
 nan_matrix = df.isnull()
 print (nan_matrix)
 print (nan_matrix.sum())
@@ -34,19 +30,15 @@ df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
 print(df[numeric_cols])
 
 ###################### преобразование категориальных данных
-df = pd.get_dummies(df, columns=no_numeric_cols, drop_first=True)
-print(df)
+
+df.drop(['Name', 'PassengerId','Cabin'], axis='columns', inplace=True)
+
+no_numeric_cols =  df.select_dtypes(include='object').columns
+df = pd.get_dummies(df, columns=no_numeric_cols, drop_first=False)
+
 train_df, test_df = train_test_split(df, test_size=0.3, random_state=42)
-print(train_df)
-print (test_df)
 
 df.to_csv("processed_titanic.csv", index=False)
-
-
-
-
-
-
-
+df.info()
 
 
