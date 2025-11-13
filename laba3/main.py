@@ -39,6 +39,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_
 dt_classifier_model = DecisionTreeClassifier()
 dt_classifier_model.fit(X_train, y_train)
 y_proba = dt_classifier_model.predict_proba(X_test)
+print ("y_proba:",y_proba[:10])
+print("Print ranzir: ",dt_classifier_model.classes_)
 fpr, tpr, thresholds = roc_curve(y_test, y_proba[:, 1])
 
 plt.plot(fpr, tpr, marker='o')
